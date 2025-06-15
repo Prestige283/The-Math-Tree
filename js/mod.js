@@ -43,6 +43,7 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	gain=gain.times(tmp.B.effect)
 	return gain
 }
 

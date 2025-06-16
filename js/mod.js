@@ -13,16 +13,19 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
-	name: "The first test",
+	num: "0.2",
+	name: "Grades",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.1</h3><br>
+	<h3>v0.1.1: Grades</h3><br>
+		- Added 2 more B upgrades.<br>
+		- Added 6 T upgrades.<br><br>
+	<h3>v0.1: The first test</h3><br>
 		- Added 2 more B upgrades.<br>
 		- Added T layer.<br>
 		- Added 2nd story entry.<br><br>
-	<h3>v0.0</h3><br>
+	<h3>v0.0: Absolutely nothing</h3><br>
 		- Added B layer and 1 upgrade.<br>
 		- Added story.`
 
@@ -47,6 +50,7 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	if (hasUpgrade("B",21)) gain=gain.times(upgradeEffect("B",21))
 	gain=gain.times(tmp.B.effect)
 	return gain
 }
@@ -61,7 +65,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return hasUpgrade("T",23)
 }
 
 

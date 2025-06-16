@@ -16,6 +16,9 @@ addLayer("B", {
     effect() {
         let boost=player.B.points.add(1).log(10).add(1)
         if (hasUpgrade('B', 11)) boost = boost.pow(2)
+        if (hasUpgrade('T', 11)) boost = boost.pow(1.2)
+        if (hasUpgrade('T', 12)) boost = boost.pow(1.25)
+        if (hasUpgrade('T', 13)) boost = boost.pow(1.3)
         return boost
     },
     effectDescription() {
@@ -27,7 +30,11 @@ addLayer("B", {
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
+        exp = new Decimal(1)
+        if (hasUpgrade("T",21)) exp=exp.times(1.05)
+        if (hasUpgrade("T",22)) exp=exp.times(1.05)
+        if (hasUpgrade("T",23)) exp=exp.times(1.1)
+        return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
@@ -44,7 +51,9 @@ addLayer("B", {
             description: "Brain cells boost themselves",
             cost: new Decimal(50),
             effect() {
-                return player.B.points.add(1).pow(0.2)
+                boost= player.B.points.add(1).pow(0.2)
+                if (hasUpgrade(this.layer,22)) boost=boost.pow(1.2)
+                return boost
             },
             effectDisplay() {
                 return "x"+format(this.effect())
@@ -52,8 +61,32 @@ addLayer("B", {
         },
         13: {
             title: "A new beginning...",
-            description: "Unlock a new layer",
+            description: "Unlock a new layer (and some upgrades)",
             cost: new Decimal(250),
+        },
+        21: {
+            title: "Learn from the math",
+            description: "Points boost themselves",
+            cost: new Decimal(500),
+            effect() {
+                boost= player.points.add(1).pow(0.1)
+                if (hasUpgrade(this.layer,22)) boost=boost.pow(1.2)
+                return boost
+            },
+            effectDisplay() {
+                return "x"+format(this.effect())
+            },
+            unlocked(){
+                return player.T.everUnlocked && hasUpgrade(this.layer,13)
+            },
+        },
+        22: {
+            title: "Intense training",
+            description: "^1.2 to B upgrades 12 and 21",
+            cost: new Decimal(4000),
+            unlocked(){
+                return player.T.everUnlocked && hasUpgrade(this.layer,13)
+            },
         },
     },
     layerShown(){return true}
@@ -141,7 +174,67 @@ addLayer("T", {
         {key: "t", description: "B: Reset for brain cells", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     upgrades: {
-
+        11: {
+            title: "Get a C in Math 6",
+            description: "^1.2 brain cell effect",
+            cost: new Decimal(1),
+            unlocked() {
+                return getBuyableAmount(this.layer,11).gte(1)
+            },
+        },
+        12: {
+            title: "Get a B in Math 6",
+            description: "^1.25 brain cell effect",
+            cost: new Decimal(2),
+            unlocked() {
+                return getBuyableAmount(this.layer,11).gte(1)
+            },
+        },
+        13: {
+            title: "Get an A in Math 6",
+            description: "^1.3 brain cell effect",
+            cost: new Decimal(4),
+            unlocked() {
+                return getBuyableAmount(this.layer,11).gte(1)
+            },
+        },
+        21: {
+            title: "Get a C in Math 7",
+            description: "^1.05 brain cell gain",
+            cost: new Decimal(3),
+            unlocked() {
+                return getBuyableAmount(this.layer,11).gte(2)
+            },
+        },
+        22: {
+            title: "Get a B in Math 7",
+            description: "^1.05 brain cell gain",
+            cost: new Decimal(5),
+            unlocked() {
+                return getBuyableAmount(this.layer,11).gte(2)
+            },
+        },
+        23: {
+            title: "Get an A in Math 7",
+            description: "^1.1 brain cell gain",
+            cost: new Decimal(7),
+            unlocked() {
+                return getBuyableAmount(this.layer,11).gte(2)
+            },
+        },
+    },
+    buyables: {
+    11: {
+        title: "Learn harder math",
+        cost(x) { return new Decimal(x).add(1).pow(2) },
+        display() { return "Unlocking "+getBuyableAmount("T",11)+"/"+this.purchaseLimit+" math classes<br>Cost: "+format(this.cost())+" tests taken" },
+        canAfford() { return player[this.layer].points.gte(this.cost()) },
+        purchaseLimit: 3,
+        buy() {
+            player[this.layer].points = player[this.layer].points.sub(this.cost())
+            setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+        },
+    },
     },
     update(diff) {
   if (player[this.layer].unlocked) {

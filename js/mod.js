@@ -13,14 +13,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "The first test",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.1</h3><br>
+		- Added 2 more B upgrades.<br>
+		- Added T layer.<br>
+		- Added 2nd story entry.<br><br>
 	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+		- Added B layer and 1 upgrade.<br>
+		- Added story.`
 
 let winText = `Congratulations! You have solved all of the math problems in existence.`
 

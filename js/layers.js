@@ -27,12 +27,13 @@ addLayer("B", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade('B', 12)) mult=mult.times(upgradeEffect("B",12))
+        if (hasUpgrade("T",32)) mult=mult.times(upgradeEffect("T",32))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         exp = new Decimal(1)
         if (hasUpgrade("T",21)) exp=exp.times(1.05)
-        if (hasUpgrade("T",22)) exp=exp.times(1.05)
+        if (hasUpgrade("T",22)) exp=exp.times(1.075)
         if (hasUpgrade("T",23)) exp=exp.times(1.1)
         return exp
     },
@@ -164,20 +165,41 @@ addLayer("T", {
     exponent: 1, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        //if (hasUpgrade("T",33)) mult=mult.times(upgradeEffect("T",33))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
+        exp = new Decimal(1)
+        if (hasUpgrade("T",33)) exp=exp.times(upgradeEffect("T",33))
+        return exp
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
-        {key: "t", description: "B: Reset for brain cells", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+        {key: "t", description: "T: Reset for tests taken", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     upgrades: {
         11: {
             title: "Get a C in Math 6",
             description: "^1.2 brain cell effect",
-            cost: new Decimal(1),
+            cost() {
+                let base = new Decimal(1)
+                if (hasUpgrade("T", 11)) base = base.add(1)
+                if (hasUpgrade("T", 12)) base = base.add(1)
+                if (hasUpgrade("T", 13)) base = base.add(1)
+                if (hasUpgrade("T", 21)) base = base.add(1)
+                if (hasUpgrade("T", 22)) base = base.add(1)
+                if (hasUpgrade("T", 23)) base = base.add(1)
+                if (hasUpgrade("T", 31)) base = base.add(1)
+                if (hasUpgrade("T", 32)) base = base.add(1)
+                if (hasUpgrade("T", 33)) base = base.add(1)
+                if (hasUpgrade("T", 41)) base = base.add(1)
+                if (hasUpgrade("T", 42)) base = base.add(1)
+                if (hasUpgrade("T", 43)) base = base.add(1)
+                if (hasUpgrade("T", 51)) base = base.add(1)
+                if (hasUpgrade("T", 52)) base = base.add(1)
+                if (hasUpgrade("T", 53)) base = base.add(1)
+                return base
+            },
             unlocked() {
                 return getBuyableAmount(this.layer,11).gte(1)
             },
@@ -185,7 +207,25 @@ addLayer("T", {
         12: {
             title: "Get a B in Math 6",
             description: "^1.25 brain cell effect",
-            cost: new Decimal(2),
+            cost() {
+                let base = new Decimal(2)
+                if (hasUpgrade("T", 11)) base = base.add(1)
+                if (hasUpgrade("T", 12)) base = base.add(1)
+                if (hasUpgrade("T", 13)) base = base.add(1)
+                if (hasUpgrade("T", 21)) base = base.add(1)
+                if (hasUpgrade("T", 22)) base = base.add(1)
+                if (hasUpgrade("T", 23)) base = base.add(1)
+                if (hasUpgrade("T", 31)) base = base.add(1)
+                if (hasUpgrade("T", 32)) base = base.add(1)
+                if (hasUpgrade("T", 33)) base = base.add(1)
+                if (hasUpgrade("T", 41)) base = base.add(1)
+                if (hasUpgrade("T", 42)) base = base.add(1)
+                if (hasUpgrade("T", 43)) base = base.add(1)
+                if (hasUpgrade("T", 51)) base = base.add(1)
+                if (hasUpgrade("T", 52)) base = base.add(1)
+                if (hasUpgrade("T", 53)) base = base.add(1)
+                return base
+            },
             unlocked() {
                 return getBuyableAmount(this.layer,11).gte(1)
             },
@@ -193,7 +233,25 @@ addLayer("T", {
         13: {
             title: "Get an A in Math 6",
             description: "^1.3 brain cell effect",
-            cost: new Decimal(4),
+            cost() {
+                let base = new Decimal(3)
+                if (hasUpgrade("T", 11)) base = base.add(1)
+                if (hasUpgrade("T", 12)) base = base.add(1)
+                if (hasUpgrade("T", 13)) base = base.add(1)
+                if (hasUpgrade("T", 21)) base = base.add(1)
+                if (hasUpgrade("T", 22)) base = base.add(1)
+                if (hasUpgrade("T", 23)) base = base.add(1)
+                if (hasUpgrade("T", 31)) base = base.add(1)
+                if (hasUpgrade("T", 32)) base = base.add(1)
+                if (hasUpgrade("T", 33)) base = base.add(1)
+                if (hasUpgrade("T", 41)) base = base.add(1)
+                if (hasUpgrade("T", 42)) base = base.add(1)
+                if (hasUpgrade("T", 43)) base = base.add(1)
+                if (hasUpgrade("T", 51)) base = base.add(1)
+                if (hasUpgrade("T", 52)) base = base.add(1)
+                if (hasUpgrade("T", 53)) base = base.add(1)
+                return base
+            },
             unlocked() {
                 return getBuyableAmount(this.layer,11).gte(1)
             },
@@ -201,15 +259,51 @@ addLayer("T", {
         21: {
             title: "Get a C in Math 7",
             description: "^1.05 brain cell gain",
-            cost: new Decimal(3),
+            cost() {
+                let base = new Decimal(2)
+                if (hasUpgrade("T", 11)) base = base.add(1)
+                if (hasUpgrade("T", 12)) base = base.add(1)
+                if (hasUpgrade("T", 13)) base = base.add(1)
+                if (hasUpgrade("T", 21)) base = base.add(1)
+                if (hasUpgrade("T", 22)) base = base.add(1)
+                if (hasUpgrade("T", 23)) base = base.add(1)
+                if (hasUpgrade("T", 31)) base = base.add(1)
+                if (hasUpgrade("T", 32)) base = base.add(1)
+                if (hasUpgrade("T", 33)) base = base.add(1)
+                if (hasUpgrade("T", 41)) base = base.add(1)
+                if (hasUpgrade("T", 42)) base = base.add(1)
+                if (hasUpgrade("T", 43)) base = base.add(1)
+                if (hasUpgrade("T", 51)) base = base.add(1)
+                if (hasUpgrade("T", 52)) base = base.add(1)
+                if (hasUpgrade("T", 53)) base = base.add(1)
+                return base
+            },
             unlocked() {
                 return getBuyableAmount(this.layer,11).gte(2)
             },
         },
         22: {
             title: "Get a B in Math 7",
-            description: "^1.05 brain cell gain",
-            cost: new Decimal(5),
+            description: "^1.075 brain cell gain",
+            cost() {
+                let base = new Decimal(3)
+                if (hasUpgrade("T", 11)) base = base.add(1)
+                if (hasUpgrade("T", 12)) base = base.add(1)
+                if (hasUpgrade("T", 13)) base = base.add(1)
+                if (hasUpgrade("T", 21)) base = base.add(1)
+                if (hasUpgrade("T", 22)) base = base.add(1)
+                if (hasUpgrade("T", 23)) base = base.add(1)
+                if (hasUpgrade("T", 31)) base = base.add(1)
+                if (hasUpgrade("T", 32)) base = base.add(1)
+                if (hasUpgrade("T", 33)) base = base.add(1)
+                if (hasUpgrade("T", 41)) base = base.add(1)
+                if (hasUpgrade("T", 42)) base = base.add(1)
+                if (hasUpgrade("T", 43)) base = base.add(1)
+                if (hasUpgrade("T", 51)) base = base.add(1)
+                if (hasUpgrade("T", 52)) base = base.add(1)
+                if (hasUpgrade("T", 53)) base = base.add(1)
+                return base
+            },
             unlocked() {
                 return getBuyableAmount(this.layer,11).gte(2)
             },
@@ -217,9 +311,128 @@ addLayer("T", {
         23: {
             title: "Get an A in Math 7",
             description: "^1.1 brain cell gain",
-            cost: new Decimal(7),
+            cost() {
+                let base = new Decimal(4)
+                if (hasUpgrade("T", 11)) base = base.add(1)
+                if (hasUpgrade("T", 12)) base = base.add(1)
+                if (hasUpgrade("T", 13)) base = base.add(1)
+                if (hasUpgrade("T", 21)) base = base.add(1)
+                if (hasUpgrade("T", 22)) base = base.add(1)
+                if (hasUpgrade("T", 23)) base = base.add(1)
+                if (hasUpgrade("T", 31)) base = base.add(1)
+                if (hasUpgrade("T", 32)) base = base.add(1)
+                if (hasUpgrade("T", 33)) base = base.add(1)
+                if (hasUpgrade("T", 41)) base = base.add(1)
+                if (hasUpgrade("T", 42)) base = base.add(1)
+                if (hasUpgrade("T", 43)) base = base.add(1)
+                if (hasUpgrade("T", 51)) base = base.add(1)
+                if (hasUpgrade("T", 52)) base = base.add(1)
+                if (hasUpgrade("T", 53)) base = base.add(1)
+                return base
+            },
             unlocked() {
                 return getBuyableAmount(this.layer,11).gte(2)
+            },
+        },
+        31: {
+            title: "Get a C in Math 8",
+            description: "Tests boost point gain",
+            cost() {
+                let base = new Decimal(3)
+                if (hasUpgrade("T", 11)) base = base.add(1)
+                if (hasUpgrade("T", 12)) base = base.add(1)
+                if (hasUpgrade("T", 13)) base = base.add(1)
+                if (hasUpgrade("T", 21)) base = base.add(1)
+                if (hasUpgrade("T", 22)) base = base.add(1)
+                if (hasUpgrade("T", 23)) base = base.add(1)
+                if (hasUpgrade("T", 31)) base = base.add(1)
+                if (hasUpgrade("T", 32)) base = base.add(1)
+                if (hasUpgrade("T", 33)) base = base.add(1)
+                if (hasUpgrade("T", 41)) base = base.add(1)
+                if (hasUpgrade("T", 42)) base = base.add(1)
+                if (hasUpgrade("T", 43)) base = base.add(1)
+                if (hasUpgrade("T", 51)) base = base.add(1)
+                if (hasUpgrade("T", 52)) base = base.add(1)
+                if (hasUpgrade("T", 53)) base = base.add(1)
+                return base
+            },
+            effect() {
+                boost= player.T.points.add(1).pow(0.25)
+                return boost
+            },
+            effectDisplay() {
+                return "x"+format(this.effect())
+            },
+            unlocked() {
+                return getBuyableAmount(this.layer,11).gte(3)
+            },
+        },
+        32: {
+            title: "Get a B in Math 8",
+            description: "Tests boost brain cell gain",
+            cost() {
+                let base = new Decimal(4)
+                if (hasUpgrade("T", 11)) base = base.add(1)
+                if (hasUpgrade("T", 12)) base = base.add(1)
+                if (hasUpgrade("T", 13)) base = base.add(1)
+                if (hasUpgrade("T", 21)) base = base.add(1)
+                if (hasUpgrade("T", 22)) base = base.add(1)
+                if (hasUpgrade("T", 23)) base = base.add(1)
+                if (hasUpgrade("T", 31)) base = base.add(1)
+                if (hasUpgrade("T", 32)) base = base.add(1)
+                if (hasUpgrade("T", 33)) base = base.add(1)
+                if (hasUpgrade("T", 41)) base = base.add(1)
+                if (hasUpgrade("T", 42)) base = base.add(1)
+                if (hasUpgrade("T", 43)) base = base.add(1)
+                if (hasUpgrade("T", 51)) base = base.add(1)
+                if (hasUpgrade("T", 52)) base = base.add(1)
+                if (hasUpgrade("T", 53)) base = base.add(1)
+                return base
+            },
+            effect() {
+                boost= player.T.points.add(1).pow(0.15)
+                if (hasUpgrade(this.layer,22)) boost=boost.pow(1.2)
+                return boost
+            },
+            effectDisplay() {
+                return "x"+format(this.effect())
+            },
+            unlocked() {
+                return getBuyableAmount(this.layer,11).gte(3)
+            },
+        },
+        33: {
+            title: "Get an A in Math 8",
+            description: "Tests boost test gain",
+            cost() {
+                let base = new Decimal(5)
+                if (hasUpgrade("T", 11)) base = base.add(1)
+                if (hasUpgrade("T", 12)) base = base.add(1)
+                if (hasUpgrade("T", 13)) base = base.add(1)
+                if (hasUpgrade("T", 21)) base = base.add(1)
+                if (hasUpgrade("T", 22)) base = base.add(1)
+                if (hasUpgrade("T", 23)) base = base.add(1)
+                if (hasUpgrade("T", 31)) base = base.add(1)
+                if (hasUpgrade("T", 32)) base = base.add(1)
+                if (hasUpgrade("T", 33)) base = base.add(1)
+                if (hasUpgrade("T", 41)) base = base.add(1)
+                if (hasUpgrade("T", 42)) base = base.add(1)
+                if (hasUpgrade("T", 43)) base = base.add(1)
+                if (hasUpgrade("T", 51)) base = base.add(1)
+                if (hasUpgrade("T", 52)) base = base.add(1)
+                if (hasUpgrade("T", 53)) base = base.add(1)
+                return base
+            },
+            effect() {
+                boost= player.T.points.add(1).log(10).add(1).log(10).add(1).pow(0.5)
+                if (hasUpgrade(this.layer,22)) boost=boost.pow(1.2)
+                return boost
+            },
+            effectDisplay() {
+                return "x"+format(this.effect())
+            },
+            unlocked() {
+                return getBuyableAmount(this.layer,11).gte(3)
             },
         },
     },

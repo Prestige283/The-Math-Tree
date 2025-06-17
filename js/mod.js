@@ -1,7 +1,7 @@
 let modInfo = {
 	name: "The Math Tree",
 	author: "Prestige283",
-	id: "Time's 1st tree",
+	id: "timestree1",
 	pointsName: "math problems solved",
 	modFiles: ["layers.js", "tree.js"],
 
@@ -13,19 +13,23 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1.1",
-	name: "Grades",
+	num: "0.1.2",
+	name: "Planning ahead",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.1.1: Grades</h3><br>
+	<h3>v0.1.2: "Planning ahead"</h3><br>
+		- Added 3 T upgrades.<br>
+		- Made T upgrades cheaper<br>
+		- Each T upgrade increases the cost of the others.<br><br>
+	<h3>v0.1.1: "Grades"</h3><br>
 		- Added 2 more B upgrades.<br>
 		- Added 6 T upgrades.<br><br>
-	<h3>v0.1: The first test</h3><br>
+	<h3>v0.1: "The first test"</h3><br>
 		- Added 2 more B upgrades.<br>
 		- Added T layer.<br>
 		- Added 2nd story entry.<br><br>
-	<h3>v0.0: Absolutely nothing</h3><br>
+	<h3>v0.0: "Absolutely nothing"</h3><br>
 		- Added B layer and 1 upgrade.<br>
 		- Added story.`
 
@@ -51,6 +55,7 @@ function getPointGen() {
 
 	let gain = new Decimal(1)
 	if (hasUpgrade("B",21)) gain=gain.times(upgradeEffect("B",21))
+	if (hasUpgrade("T",31)) gain=gain.times(upgradeEffect("T",31))
 	gain=gain.times(tmp.B.effect)
 	return gain
 }
@@ -65,7 +70,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return hasUpgrade("T",23)
+	return layers.T.upgrades[33].cost().eq(14)
 }
 
 
